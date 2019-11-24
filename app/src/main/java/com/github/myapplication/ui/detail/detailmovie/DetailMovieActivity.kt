@@ -10,7 +10,6 @@ import com.github.myapplication.data.model.MoviesModel
 import com.github.myapplication.ui.detail.DetailViewModel
 import com.github.myapplication.utils.Constants.Companion.KEY_MOVIE
 import kotlinx.android.synthetic.main.activity_detail_movie.*
-import kotlinx.android.synthetic.main.item_list.*
 
 class DetailMovieActivity : AppCompatActivity() {
 
