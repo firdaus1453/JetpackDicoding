@@ -2,4 +2,7 @@
     <string name="app_name">Movie Catalogue</string>
     <string name="tab_text_1">Movies</string>
     <string name="tab_text_2">TV Show</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dalam rangka untuk membiayai dirinya sendiri. Setiap wortel ....</string>
+    <string name="year">Desember 21, 2018</string>
+    <string name="img_description">Gambar Movie</string>
 </resources>

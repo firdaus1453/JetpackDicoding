@@ -1,14 +1,13 @@
 package com.github.myapplication.data.source
 
-import android.graphics.Movie
 import com.github.myapplication.R
 import com.github.myapplication.data.model.MoviesModel
 
 /**
  * Created by Muhammad Firdaus on 24/11/2019.
  */
-object DataSource {
-    fun getDummyMovies(): List<MoviesModel> {
+object DataDummySource {
+    fun getAllMovies(): List<MoviesModel> {
         return listOf(
             MoviesModel(
                 1,
@@ -23,7 +22,7 @@ object DataSource {
                 "Aquaman",
                 "Once home to the most advanced civilization on Earth, Atlantis is now an underwater kingdom ruled by the power-hungry King Orm. With a vast army at his disposal, Orm plans to conquer the remaining oceanic people and then the surface world. Standing in his way is Arthur Curry, Orm's half-human, half-Atlantean brother and true heir to the throne.",
                 R.drawable.poster_aquaman,
-                "17 Agustus 1945",
+                "2018",
                 "95"
             ),
             MoviesModel(
@@ -31,7 +30,7 @@ object DataSource {
                 "Bohemian Rhapsody",
                 "lSinger Freddie Mercury, guitarist Brian May, drummer Roger Taylor and bass guitarist John Deacon take the music world by storm when they form the rock 'n' roll band Queen in 1970. Hit songs become instant classics. When Mercury's increasingly wild lifestyle starts to spiral out of control, Queen soon faces its greatest challenge yet – finding a way to keep the band together amid the success and excess.",
                 R.drawable.poster_bohemian,
-                "17 Agustus 1945",
+                "2018",
                 "95"
             ),
             MoviesModel(
@@ -39,7 +38,7 @@ object DataSource {
                 "Creed II",
                 "Between personal obligations and training for his next big fight against an opponent with ties to his family's past, Adonis Creed is up against the challenge of his life.",
                 R.drawable.poster_creed,
-                "17 Agustus 1945",
+                "2018",
                 "95"
             ),
             MoviesModel(
@@ -87,7 +86,7 @@ object DataSource {
                 "Mortal Engines",
                 "Many thousands of years in the future, Earth’s cities roam the globe on huge wheels, devouring each other in a struggle for ever diminishing resources. On one of these massive traction cities, the old London, Tom Natsworthy has an unexpected encounter with a mysterious young woman from the wastelands who will change the course of his life forever.",
                 R.drawable.poster_mortal_engines,
-                "17 Agustus 1945",
+                "2018",
                 "78"
             ),
             MoviesModel(
@@ -103,7 +102,7 @@ object DataSource {
                 "Ralph Breaks The Internet",
                 "Video game bad guy Ralph and fellow misfit Vanellope von Schweetz must risk it all by traveling to the World Wide Web in search of a replacement part to save Vanellope's video game, \"Sugar Rush.\" In way over their heads, Ralph and Vanellope rely on the citizens of the internet -- the netizens -- to help navigate their way, including an entrepreneur named Yesss, who is the head algorithm and the heart and soul of trend-making site BuzzzTube.",
                 R.drawable.poster_ralph,
-                "17 Agustus 1945",
+                "2018",
                 "72"
             ),
             MoviesModel(
@@ -133,7 +132,7 @@ object DataSource {
         )
     }
 
-    fun getDummyTvShows(): List<MoviesModel> {
+    fun getAllTvShows(): List<MoviesModel> {
         return listOf(
             MoviesModel(
                 1,
@@ -148,7 +147,7 @@ object DataSource {
                 "Doom Patrol",
                 "The Doom Patrol’s members each suffered horrible accidents that gave them superhuman abilities — but also left them scarred and disfigured. Traumatized and downtrodden, the team found purpose through The Chief, who brought them together to investigate the weirdest phenomena in existence — and to protect Earth from what they find.",
                 R.drawable.poster_doom_patrol,
-                "17 Agustus 1945",
+                "2018",
                 "56"
             ),
             MoviesModel(
@@ -156,7 +155,7 @@ object DataSource {
                 "Dragon Ball",
                 "Long ago in the mountains, a fighting master known as Gohan discovered a strange boy whom he named Goku. Gohan raised him and trained Goku in martial arts until he died. The young and very strong boy was on his own, but easily managed. Then one day, Goku met a teenage girl named Bulma, whose search for the dragon balls brought her to Goku's home. Together, they set off to find all seven dragon balls in an adventure that would change Goku's life forever. See how Goku met his life long friends Bulma, Yamcha, Krillin, Master Roshi and more. And see his adventures as a boy, all leading up to Dragonball Z and later Dragonball GT.",
                 R.drawable.poster_dragon_ball,
-                "17 Agustus 1945",
+                "2018",
                 "76"
             ),
             MoviesModel(
@@ -164,7 +163,7 @@ object DataSource {
                 "Fairy Tail",
                 "Lucy is a 17-year-old girl, who wants to be a full-fledged mage. One day when visiting Harujion Town, she meets Natsu, a young man who gets sick easily by any type of transportation. But Natsu isn't just any ordinary kid, he's a member of one of the world's most infamous mage guilds: Fairy Tail.",
                 R.drawable.poster_fairytail,
-                "17 Agustus 1945",
+                "2018",
                 "88"
             ),
             MoviesModel(
@@ -172,7 +171,7 @@ object DataSource {
                 "Family Guy",
                 "Sick, twisted, politically incorrect and Freakin' Sweet animated series featuring the adventures of the dysfunctional Griffin family. Bumbling Peter and long-suffering Lois have three kids. Stewie (a brilliant but sadistic baby bent on killing his mother and taking over the world), Meg (the oldest, and is the most unpopular girl in town) and Chris (the middle kid, he's not very bright but has a passion for Movie). The final member of the family is Brian - a talking dog and much more than a pet, he keeps Stewie in check whilst sipping Martinis and sorting through his own life issues.",
                 R.drawable.poster_family_guy,
-                "17 Agustus 1945",
+                "2018",
                 "56"
             ),
             MoviesModel(
@@ -180,7 +179,7 @@ object DataSource {
                 "The Flash",
                 "After a particle accelerator causes a freak storm, CSI Investigator Barry Allen is struck by lightning and falls into a coma. Months later he awakens with the power of super speed, granting him the ability to move through Central City like an unseen guardian angel. Though initially excited by his newfound powers, Barry is shocked to discover he is not the only \"meta-human\" who was created in the wake of the accelerator explosion -- and not everyone is using their new powers for good. Barry partners with S.T.A.R. Labs and dedicates his life to protect the innocent. For now, only a few close friends and associates know that Barry is literally the fastest man alive, but it won't be long before the world learns what Barry Allen has become...The Flash.",
                 R.drawable.poster_flash,
-                "17 Agustus 1945",
+                "2018",
                 "67"
             ),
             MoviesModel(
@@ -190,7 +189,7 @@ object DataSource {
                         "\n" +
                         "Everyone knows the name Commissioner Gordon. He is one of the crime world's greatest foes, a man whose reputation is synonymous with law and order. But what is known of Gordon's story and his rise from rookie detective to Police Commissioner? What did it take to navigate the multiple layers of corruption that secretly ruled Gotham City, the spawning ground of the world's most iconic villains? And what circumstances created them – the larger-than-life personas who would become Catwoman, The Penguin, The Riddler, Two-Face and The Joker?",
                 R.drawable.poster_gotham,
-                "17 Agustus 1945",
+                "2018",
                 "79"
             ),
             MoviesModel(
@@ -198,7 +197,7 @@ object DataSource {
                 "Grey's Anatomy",
                 "Follows the personal and professional lives of a group of doctors at Seattle’s Grey Sloan Memorial Hospital.",
                 R.drawable.poster_grey_anatomy,
-                "17 Agustus 1945",
+                "2018",
                 "90"
             ),
             MoviesModel(
@@ -206,7 +205,7 @@ object DataSource {
                 "Hanna",
                 "This thriller and coming-of-age drama follows the journey of an extraordinary young girl as she evades the relentless pursuit of an off-book CIA agent and tries to unearth the truth behind who she is. Based on the 2011 Joe Wright film.",
                 R.drawable.poster_hanna,
-                "17 Agustus 1945",
+                "2018",
                 "75"
             ),
             MoviesModel(
@@ -214,7 +213,7 @@ object DataSource {
                 "NCIS",
                 "From murder and espionage to terrorism and stolen submarines, a team of special agents investigates any crime that has a shred of evidence connected to Navy and Marine Corps personnel, regardless of rank or position.",
                 R.drawable.poster_ncis,
-                "17 Agustus 1945",
+                "2018",
                 "77"
             ),
             MoviesModel(
@@ -222,7 +221,7 @@ object DataSource {
                 "Riverdale",
                 "Set in the present, the series offers a bold, subversive take on Archie, Betty, Veronica and their friends, exploring the surreality of small-town life, the darkness and weirdness bubbling beneath Riverdale’s wholesome facade.",
                 R.drawable.poster_riverdale,
-                "17 Agustus 1945",
+                "2018",
                 "67"
             ),
             MoviesModel(
@@ -230,7 +229,7 @@ object DataSource {
                 "Shameless",
                 "Chicagoan Frank Gallagher is the proud single dad of six smart, industrious, independent kids, who without him would be... perhaps better off. When Frank's not at the bar spending what little money they have, he's passed out on the floor. But the kids have found ways to grow up in spite of him. They may not be like any family you know, but they make no apologies for being exactly who they are.",
                 R.drawable.poster_shameless,
-                "17 Agustus 1945",
+                "2018",
                 "95"
             ),
             MoviesModel(
@@ -261,7 +260,7 @@ object DataSource {
     }
 
     fun getMovieById(id: Int): MoviesModel? {
-        for (movie in getDummyMovies()) {
+        for (movie in getAllMovies()) {
             if (id == movie.id) {
                 return movie
             }
@@ -271,9 +270,9 @@ object DataSource {
 
     fun getTvShowById(id: Int): MoviesModel? {
 
-        for (movie in getDummyTvShows()) {
-            if (id == movie.id) {
-                return movie
+        for (tv in getAllTvShows()) {
+            if (id == tv.id) {
+                return tv
             }
         }
         return null
