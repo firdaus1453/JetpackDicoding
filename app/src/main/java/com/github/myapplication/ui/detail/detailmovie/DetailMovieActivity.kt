@@ -8,7 +8,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.github.myapplication.R
 import com.github.myapplication.data.model.MoviesModel
 import com.github.myapplication.ui.detail.DetailViewModel
-import com.github.myapplication.utils.Constants.Companion.KEY_MOVIE
+import com.github.myapplication.utils.Constants.KEY_MOVIE
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
 class DetailMovieActivity : AppCompatActivity() {

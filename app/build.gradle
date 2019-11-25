@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply from: '../deps.gradle'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -15,6 +15,15 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -25,25 +34,59 @@ android {
             debuggable true
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'MOVIE_DB_API_KEY', MovieDbApiKey
+        it.buildConfigField 'String', 'BASE_URL', BaseUrl
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    // Anko
-    implementation "org.jetbrains.anko:anko-commons:0.10.8"
 
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    // Google support
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.support
+    implementation supportDependencies.design
+    implementation supportDependencies.recyclerView
+    implementation supportDependencies.cardView
+    implementation supportDependencies.constraintLayout
+    implementation supportDependencies.kotlin
+    implementation supportDependencies.ktx
+    implementation supportDependencies.legacy
+    implementation supportDependencies.recyclerViewNormal
+
+    // Arch Components
+    implementation googleLibraries.archRoomRuntime
+    implementation googleLibraries.archLcExt
+    implementation googleLibraries.archLcJava
+    implementation googleLibraries.material
+    implementation googleLibraries.lifcycle
+    annotationProcessor googleLibraries.archRoomComp
+    kapt googleLibraries.archRoomComp
+
+    // Network and debugging
+    implementation libraries.retrofit
+    implementation libraries.retrofitRx2
+    implementation libraries.okhttp
+    implementation libraries.okhttpLogging
+    implementation libraries.anko
+    debugImplementation libraries.chuckOkHttpLogging
+
+    // Rx
+    implementation libraries.rxAndroid
+    implementation libraries.rxJava
+
+    // Utils
+    implementation libraries.glide
+    implementation libraries.retrofitGson
+    kapt googleLibraries.dataBinding
+    kapt libraries.glideCompiler
+    annotationProcessor libraries.glideCompiler
+
+    // Unit Test
+    testImplementation testLibraries.junit
+    testImplementation testLibraries.junitRunner
+    testImplementation testLibraries.espressoCore
+    testImplementation testLibraries.rules
 }

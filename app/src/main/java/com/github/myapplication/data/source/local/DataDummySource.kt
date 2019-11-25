@@ -1,4 +1,4 @@
-package com.github.myapplication.data.source
+package com.github.myapplication.data.source.local
 
 import com.github.myapplication.R
 import com.github.myapplication.data.model.MoviesModel

@@ -6,20 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
-import com.github.myapplication.data.model.MoviesModel
 import com.github.myapplication.ui.content.ContentAdapter
 import com.github.myapplication.ui.content.ContentViewModel
-import com.github.myapplication.ui.detail.detailtvshow.DetailTvShowActivity
-import com.github.myapplication.utils.Constants.Companion.KEY_TVSHOW
+import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
+import com.github.myapplication.utils.Constants
+import com.github.myapplication.utils.gone
+import com.github.myapplication.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
 import org.jetbrains.anko.startActivity
 
 class TvShowFragment : Fragment() {
 
-    private var data = listOf<MoviesModel>()
     private val mViewModel by lazy {
         ViewModelProviders.of(this).get(ContentViewModel::class.java)
     }
@@ -34,14 +35,50 @@ class TvShowFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mViewModel.getAllTvShows()
+        onCreateObserver()
 
-        data = mViewModel.getAllTvShows
-
-        recycler_movie.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ContentAdapter(data) { idTvShow ->
-                context?.startActivity<DetailTvShowActivity>(KEY_TVSHOW to idTvShow)
-            }
+        swipe_refresh.setOnRefreshListener {
+            swipe_refresh.isRefreshing = false
+            mViewModel.getAllTvShows()
+            goneAll()
         }
+    }
+
+    private fun onCreateObserver() {
+        mViewModel.apply {
+            tvShowList.observe(this@TvShowFragment, Observer {
+                constrain_data_not_found.gone()
+                recycler_movie.visible()
+                recycler_movie.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = ContentAdapter(it) { idMovie ->
+                        context?.startActivity<DetailMovieActivity>(Constants.KEY_MOVIE to idMovie)
+                    }
+                }
+            })
+
+            eventGlobalMessage.observe(this@TvShowFragment, Observer {
+                if (it != null) {
+                    recycler_movie.gone()
+                    constrain_data_not_found.visible()
+                    text_sad.text = it
+                }
+            })
+
+            eventShowProgress.observe(this@TvShowFragment, Observer {
+                if (it == true) {
+                    progress_bar.visible()
+                    constrain_data_not_found.gone()
+                } else {
+                    progress_bar.gone()
+                }
+            })
+        }
+    }
+
+    private fun goneAll() {
+        recycler_movie.gone()
+        constrain_data_not_found.gone()
     }
 }
