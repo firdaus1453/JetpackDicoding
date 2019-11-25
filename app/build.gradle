@@ -61,8 +61,9 @@ dependencies {
     implementation googleLibraries.archLcExt
     implementation googleLibraries.archLcJava
     implementation googleLibraries.material
-    implementation googleLibraries.lifcycle
+    implementation googleLibraries.lifecycle
     annotationProcessor googleLibraries.archRoomComp
+    annotationProcessor googleLibraries.lifecycleCompiler
     kapt googleLibraries.archRoomComp
 
     // Network and debugging

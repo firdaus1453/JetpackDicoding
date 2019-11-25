@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
 import com.github.myapplication.ui.content.ContentAdapter
@@ -15,15 +14,14 @@ import com.github.myapplication.ui.content.ContentViewModel
 import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
 import com.github.myapplication.utils.Constants.KEY_MOVIE
 import com.github.myapplication.utils.gone
+import com.github.myapplication.utils.obtainViewModel
 import com.github.myapplication.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
 import org.jetbrains.anko.startActivity
 
 class MovieFragment : Fragment() {
 
-    private val mViewModel by lazy {
-        ViewModelProviders.of(this).get(ContentViewModel::class.java)
-    }
+    private lateinit var mViewModel: ContentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +33,11 @@ class MovieFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mViewModel.getAllMovies()
+        if (activity != null){
+            mViewModel = obtainVm()
+        }
         onCreateObserver()
+        mViewModel.getAllMovies()
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
@@ -47,7 +48,7 @@ class MovieFragment : Fragment() {
 
     private fun onCreateObserver() {
         mViewModel.apply {
-            movieList.observe(this@MovieFragment, Observer {
+            getMovieList().observe(this@MovieFragment, Observer {
                 constrain_data_not_found.gone()
                 recycler_movie.visible()
                 recycler_movie.apply {
@@ -77,6 +78,8 @@ class MovieFragment : Fragment() {
             })
         }
     }
+
+    private fun obtainVm(): ContentViewModel = obtainViewModel(ContentViewModel::class.java)
 
     private fun goneAll() {
         recycler_movie.gone()

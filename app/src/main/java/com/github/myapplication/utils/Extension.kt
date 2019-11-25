@@ -4,6 +4,10 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import com.github.myapplication.utils.Constants.SERVER_ERROR_MESSAGE_DEFAULT
 import com.google.android.material.snackbar.Snackbar
 
@@ -44,3 +48,10 @@ fun View.showSnackbarDefault(
 
     Snackbar.make(this, finalMessage, finalDuration).show()
 }
+
+fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) =
+    ViewModelProviders.of(this, ViewModelFactory.getInstance(application)).get(viewModelClass)
+
+fun <T : ViewModel> Fragment.obtainViewModel(viewModelClass: Class<T>) =
+    ViewModelProviders.of(this, ViewModelFactory.getInstance(requireActivity().application)).get(viewModelClass)
+

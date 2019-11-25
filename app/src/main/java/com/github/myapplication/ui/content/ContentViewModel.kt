@@ -9,6 +9,9 @@ import com.github.myapplication.utils.Constants.FILTER_POPULAR
 import com.github.myapplication.utils.Constants.FILTER_TOP_RATED
 import com.github.myapplication.utils.Constants.TYPE_MOVIE
 import com.github.myapplication.utils.Constants.TYPE_TV
+import androidx.lifecycle.LiveData
+
+
 
 /**
  * Created by Muhammad Firdaus on 24/11/2019.
@@ -16,8 +19,8 @@ import com.github.myapplication.utils.Constants.TYPE_TV
 
 class ContentViewModel(context: Application) : BaseViewModel(context) {
 
-    var movieList = MutableLiveData<List<MovieModel>>()
-    var tvShowList = MutableLiveData<List<MovieModel>>()
+    private val movieList = MutableLiveData<List<MovieModel>>()
+    private val tvShowList = MutableLiveData<List<MovieModel>>()
 
     fun getAllMovies() {
         eventShowProgress.value = true
@@ -61,5 +64,13 @@ class ContentViewModel(context: Application) : BaseViewModel(context) {
                 eventGlobalMessage.value = errorMessage
             }
         })
+    }
+
+    fun getMovieList(): LiveData<List<MovieModel>> {
+        return movieList
+    }
+
+    fun getTvShowList(): LiveData<List<MovieModel>> {
+        return tvShowList
     }
 }

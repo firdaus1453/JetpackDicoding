@@ -54,7 +54,8 @@ ext {
             archLcJava     : "android.arch.lifecycle:common-java8:${archLifecycleVersion}",
             dataBinding    : "com.android.databinding:compiler:${gradleVersion}",
             material       : "com.google.android.material:material:1.0.0",
-            lifcycle       : "androidx.lifecycle:lifecycle-extensions:2.1.0"
+            lifecycle       : "androidx.lifecycle:lifecycle-extensions:2.1.0",
+            lifecycleCompiler : "androidx.lifecycle:lifecycle-compiler:2.1.0"
     ]
 
     testLibraries = [
