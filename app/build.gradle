@@ -90,4 +90,7 @@ dependencies {
     testImplementation testLibraries.junitRunner
     testImplementation testLibraries.espressoCore
     testImplementation testLibraries.rules
+    testImplementation testLibraries.mockito
+    testImplementation testLibraries.mockitoInline
+    testImplementation testLibraries.archTest
 }

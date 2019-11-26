@@ -11,6 +11,8 @@ interface DataSource : BaseDataSource {
     // remote source
     fun getAllData(type: String, filter: String, callback: GetAllDataCallback)
 
+    fun getDataById(type: String, id: Int, callback: GetDataByIdCallback)
+
     // callback
     interface GetAllDataCallback : BaseDataSource.ResponseCallback<List<MovieModel>>
 

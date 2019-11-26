@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.github.myapplication.R
-import com.github.myapplication.ui.content.movie.MovieFragment
-import com.github.myapplication.ui.content.tvshow.TvShowFragment
+import com.github.myapplication.ui.main.movie.MovieFragment
+import com.github.myapplication.ui.main.tvshow.TvShowFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,

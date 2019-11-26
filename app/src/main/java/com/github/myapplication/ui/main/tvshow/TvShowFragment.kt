@@ -1,4 +1,4 @@
-package com.github.myapplication.ui.content.movie
+package com.github.myapplication.ui.main.tvshow
 
 
 import android.os.Bundle
@@ -9,19 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
-import com.github.myapplication.ui.content.ContentAdapter
-import com.github.myapplication.ui.content.ContentViewModel
 import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
-import com.github.myapplication.utils.Constants.KEY_MOVIE
+import com.github.myapplication.ui.detail.detailtvshow.DetailTvShowActivity
+import com.github.myapplication.ui.main.MainAdapter
+import com.github.myapplication.ui.main.MainViewModel
+import com.github.myapplication.utils.Constants
 import com.github.myapplication.utils.gone
 import com.github.myapplication.utils.obtainViewModel
 import com.github.myapplication.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
 import org.jetbrains.anko.startActivity
 
-class MovieFragment : Fragment() {
+class TvShowFragment : Fragment() {
 
-    private lateinit var mViewModel: ContentViewModel
+    private lateinit var mViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,36 +32,44 @@ class MovieFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (activity != null){
-            mViewModel = obtainVm()
-        }
-        onCreateObserver()
-        mViewModel.getAllMovies()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViewModel()
+        setupRefresh()
+        getData()
+    }
 
+    private fun getData() {
+        mViewModel.getAllTvShows()
+    }
+
+    private fun setupViewModel() {
+        mViewModel = obtainVm()
+        setupObserver()
+    }
+
+    private fun setupRefresh() {
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
-            mViewModel.getAllMovies()
+            getData()
             goneAll()
         }
     }
 
-    private fun onCreateObserver() {
+    private fun setupObserver() {
         mViewModel.apply {
-            getMovieList().observe(this@MovieFragment, Observer {
+            getTvShowList().observe(this@TvShowFragment, Observer {
                 constrain_data_not_found.gone()
                 recycler_movie.visible()
                 recycler_movie.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = ContentAdapter(it) { idMovie ->
-                        context?.startActivity<DetailMovieActivity>(KEY_MOVIE to idMovie)
+                    adapter = MainAdapter(it) { idTvShow ->
+                        context?.startActivity<DetailTvShowActivity>(Constants.KEY_TVSHOW to idTvShow)
                     }
                 }
-
             })
 
-            eventGlobalMessage.observe(this@MovieFragment, Observer {
+            eventGlobalMessage.observe(this@TvShowFragment, Observer {
                 if (it != null) {
                     recycler_movie.gone()
                     constrain_data_not_found.visible()
@@ -68,7 +77,7 @@ class MovieFragment : Fragment() {
                 }
             })
 
-            eventShowProgress.observe(this@MovieFragment, Observer {
+            eventShowProgress.observe(this@TvShowFragment, Observer {
                 if (it == true) {
                     progress_bar.visible()
                     constrain_data_not_found.gone()
@@ -79,7 +88,7 @@ class MovieFragment : Fragment() {
         }
     }
 
-    private fun obtainVm(): ContentViewModel = obtainViewModel(ContentViewModel::class.java)
+    private fun obtainVm(): MainViewModel = obtainViewModel(MainViewModel::class.java)
 
     private fun goneAll() {
         recycler_movie.gone()

@@ -4,35 +4,21 @@ package com.github.myapplication.data.model
  * Created by Muhammad Firdaus on 25/11/2019.
  */
 data class MovieModel(
-    var id: Int? = null,
+    var id: Int? = 0,
 
-    var vote_count: Int? = null,
+    var title: String? = "",
 
-    var isVideo: Boolean? = null,
+    var name: String? = "",
 
-    var vote_average: Double? = null,
+    var overview: String? = "",
 
-    var title: String? = null,
+    var poster_path: String? = "",
 
-    var popularity: Double? = null,
+    var release_date: String? = "",
 
-    var poster_path: String? = null,
+    var first_air_date: String? = "",
 
-    var original_language: String? = null,
+    var vote_average: Double? = 0.0,
 
-    var original_title: String? = null,
-
-    var genre_ids: List<Int>?,
-
-    var backdrop_path: String? = null,
-
-    var adult: Boolean? = null,
-
-    var overview: String? = null,
-
-    var release_date: String? = null,
-
-    var first_air_date: String? = null,
-
-    var favorite: String?
+    var favorite: String? = ""
 )

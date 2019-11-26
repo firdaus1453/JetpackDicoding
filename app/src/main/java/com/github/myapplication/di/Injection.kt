@@ -9,7 +9,6 @@ import com.github.myapplication.data.source.remote.RemoteDataSource
  */
 object Injection {
     fun provideRepository(context: Context): Repository {
-
         return Repository.getInstance(RemoteDataSource(context))
     }
 }

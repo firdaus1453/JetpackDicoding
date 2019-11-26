@@ -59,9 +59,12 @@ ext {
     ]
 
     testLibraries = [
-            junit        : "junit:junit:4.12",
-            junitRunner  : "androidx.test:runner:1.2.0",
-            espressoCore : "androidx.test.espresso:espresso-core:${espressoCoreVersion}",
-            rules        : "androidx.test:rules:1.2.0"
+            junit           : "junit:junit:4.12",
+            junitRunner     : "androidx.test:runner:1.2.0",
+            espressoCore    : "androidx.test.espresso:espresso-core:${espressoCoreVersion}",
+            rules           : "androidx.test:rules:1.2.0",
+            mockito         : "org.mockito:mockito-core:3.0.0",
+            mockitoInline   : "org.mockito:mockito-inline:3.0.0",
+            archTest        :  "androidx.arch.core:core-testing:2.1.0"
     ]
 }

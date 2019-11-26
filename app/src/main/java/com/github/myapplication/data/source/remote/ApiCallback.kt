@@ -19,8 +19,6 @@ abstract class ApiCallback<M> : Observer<M> {
 
     abstract fun onFinish()
 
-    abstract fun onStartObserver(disposable : Disposable)
-
     override fun onComplete() {
         onFinish()
     }
@@ -29,9 +27,7 @@ abstract class ApiCallback<M> : Observer<M> {
         onSuccess(t)
     }
 
-    override fun onSubscribe(d: Disposable) {
-        onStartObserver(d)
-    }
+    override fun onSubscribe(d: Disposable) {}
 
     override fun onError(e: Throwable) {
         e.printStackTrace()

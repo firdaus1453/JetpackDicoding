@@ -29,6 +29,13 @@ interface ApiService {
         @Query("api_key") apiKey: String
     ): Observable<BaseApiModel<List<MovieModel>>>
 
+    @GET("{type}/{id}")
+    fun getDataById(
+        @Path("type") type: String,
+        @Path("id") id: Int,
+        @Query("api_key") apiKey: String
+    ): Observable<MovieModel>
+
     companion object Factory {
 
         //In Seconds

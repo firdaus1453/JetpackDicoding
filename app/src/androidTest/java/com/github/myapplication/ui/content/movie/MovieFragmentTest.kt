@@ -6,6 +6,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.rule.ActivityTestRule
 import com.github.myapplication.R
 import com.github.myapplication.testing.SingleFragmentActivity
+import com.github.myapplication.ui.main.movie.MovieFragment
 import com.github.myapplication.utils.RecyclerViewItemCountAssertion
 import org.junit.Before
 import org.junit.Rule

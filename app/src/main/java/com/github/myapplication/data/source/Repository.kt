@@ -7,7 +7,6 @@ import com.github.myapplication.data.source.remote.RemoteDataSource
  * Created by Muhammad Firdaus on 25/11/2019.
  */
 class Repository(val remoteDataSource: RemoteDataSource) : DataSource {
-
     // remote repo
     override fun getAllData(type: String, filter: String, callback: DataSource.GetAllDataCallback) {
         remoteDataSource.getAllData(type, filter, object : DataSource.GetAllDataCallback {
@@ -25,8 +24,20 @@ class Repository(val remoteDataSource: RemoteDataSource) : DataSource {
         })
     }
 
-    override fun onClearDisposables() {
-        remoteDataSource.onClearDisposables()
+    override fun getDataById(type: String, id: Int, callback: DataSource.GetDataByIdCallback) {
+        remoteDataSource.getDataById(type, id, object : DataSource.GetDataByIdCallback {
+            override fun onSuccess(data: MovieModel) {
+                callback.onSuccess(data)
+            }
+
+            override fun onFailed(statusCode: Int, errorMessage: String?) {
+                callback.onFailed(statusCode, errorMessage)
+            }
+
+            override fun onFinish() {
+                callback.onFinish()
+            }
+        })
     }
 
     companion object {
