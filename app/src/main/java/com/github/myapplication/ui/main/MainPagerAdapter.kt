@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.github.myapplication.R
 import com.github.myapplication.ui.main.movie.MovieFragment
 import com.github.myapplication.ui.main.tvshow.TvShowFragment
@@ -17,7 +18,7 @@ private val TAB_TITLES = arrayOf(
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class MainPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class MainPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     private val pages = listOf(
         MovieFragment(),

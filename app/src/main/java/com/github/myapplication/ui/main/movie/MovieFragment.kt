@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
 import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
 import com.github.myapplication.ui.main.MainAdapter
-import com.github.myapplication.ui.main.MainViewModel
 import com.github.myapplication.utils.Constants.KEY_MOVIE
 import com.github.myapplication.utils.gone
 import com.github.myapplication.utils.obtainViewModel
@@ -21,7 +20,7 @@ import org.jetbrains.anko.startActivity
 
 class MovieFragment : Fragment() {
 
-    private lateinit var mViewModel: MainViewModel
+    private lateinit var mViewModel: MovieViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +34,6 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
         setupRefresh()
-        getData()
     }
 
     private fun getData() {
@@ -57,7 +55,7 @@ class MovieFragment : Fragment() {
 
     private fun setupObserver() {
         mViewModel.apply {
-            getMovieList().observe(this@MovieFragment, Observer {
+            getMovieList().observe(viewLifecycleOwner, Observer {
                 constrain_data_not_found.gone()
                 recycler_movie.visible()
                 recycler_movie.apply {
@@ -88,7 +86,7 @@ class MovieFragment : Fragment() {
         }
     }
 
-    private fun obtainVm(): MainViewModel = obtainViewModel(MainViewModel::class.java)
+    private fun obtainVm(): MovieViewModel = obtainViewModel(MovieViewModel::class.java)
 
     private fun goneAll() {
         recycler_movie.gone()

@@ -9,10 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
-import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
 import com.github.myapplication.ui.detail.detailtvshow.DetailTvShowActivity
 import com.github.myapplication.ui.main.MainAdapter
-import com.github.myapplication.ui.main.MainViewModel
 import com.github.myapplication.utils.Constants
 import com.github.myapplication.utils.gone
 import com.github.myapplication.utils.obtainViewModel
@@ -22,7 +20,7 @@ import org.jetbrains.anko.startActivity
 
 class TvShowFragment : Fragment() {
 
-    private lateinit var mViewModel: MainViewModel
+    private lateinit var mViewModel: TvShowViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +34,6 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
         setupRefresh()
-        getData()
     }
 
     private fun getData() {
@@ -58,7 +55,7 @@ class TvShowFragment : Fragment() {
 
     private fun setupObserver() {
         mViewModel.apply {
-            getTvShowList().observe(this@TvShowFragment, Observer {
+            getTvShowList().observe(viewLifecycleOwner, Observer {
                 constrain_data_not_found.gone()
                 recycler_movie.visible()
                 recycler_movie.apply {
@@ -88,7 +85,7 @@ class TvShowFragment : Fragment() {
         }
     }
 
-    private fun obtainVm(): MainViewModel = obtainViewModel(MainViewModel::class.java)
+    private fun obtainVm(): TvShowViewModel = obtainViewModel(TvShowViewModel::class.java)
 
     private fun goneAll() {
         recycler_movie.gone()
