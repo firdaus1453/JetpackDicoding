@@ -17,11 +17,7 @@ abstract class ApiCallback<M> : Observer<M> {
 
     abstract fun onFailure(code: Int, errorMessage: String)
 
-    abstract fun onFinish()
-
-    override fun onComplete() {
-        onFinish()
-    }
+    override fun onComplete() {}
 
     override fun onNext(t: M) {
         onSuccess(t)
@@ -65,7 +61,5 @@ abstract class ApiCallback<M> : Observer<M> {
             is SocketTimeoutException -> onFailure(-1, "Telah terjadi kesalahan ketika koneksi ke server: ${e.message}")
             else -> onFailure(-1, e.message ?: "Unknown error occured")
         }
-
-        onFinish()
     }
 }

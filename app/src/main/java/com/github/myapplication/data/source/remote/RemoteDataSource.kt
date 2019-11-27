@@ -29,10 +29,6 @@ class RemoteDataSource(context: Context) : DataSource {
                     callback.onFailed(code, errorMessage)
                 }
 
-                override fun onFinish() {
-                    callback.onFinish()
-                }
-
             })
     }
 
@@ -47,10 +43,6 @@ class RemoteDataSource(context: Context) : DataSource {
 
                 override fun onFailure(code: Int, errorMessage: String) {
                     callback.onFailed(code, errorMessage)
-                }
-
-                override fun onFinish() {
-                    callback.onFinish()
                 }
             })
     }

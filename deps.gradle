@@ -41,7 +41,8 @@ ext {
             retrofitGson            : "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
             rxAndroid               : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             rxJava                  : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
-            anko                    : "org.jetbrains.anko:anko-commons:0.10.8"
+            anko                    : "org.jetbrains.anko:anko-commons:0.10.8",
+            coroutine               : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
     ]
 
     googleLibraries = [
@@ -65,6 +66,7 @@ ext {
             rules           : "androidx.test:rules:1.2.0",
             mockito         : "org.mockito:mockito-core:3.0.0",
             mockitoInline   : "org.mockito:mockito-inline:3.0.0",
-            archTest        :  "androidx.arch.core:core-testing:2.1.0"
+            archTest        : "androidx.arch.core:core-testing:2.1.0",
+            coroutineTest  : "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
     ]
 }

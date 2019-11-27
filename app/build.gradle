@@ -78,6 +78,9 @@ dependencies {
     implementation libraries.rxAndroid
     implementation libraries.rxJava
 
+    // Coroutine
+    implementation libraries.coroutine
+
     // Utils
     implementation libraries.glide
     implementation libraries.retrofitGson
@@ -93,4 +96,6 @@ dependencies {
     testImplementation testLibraries.mockito
     testImplementation testLibraries.mockitoInline
     testImplementation testLibraries.archTest
+    testImplementation testLibraries.coroutineTest
+
 }
