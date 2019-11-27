@@ -1,11 +1,6 @@
 package com.github.myapplication.ui.main.movie
 
-import android.graphics.Movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import com.github.myapplication.data.model.MovieModel
-import com.github.myapplication.data.source.Repository
-import com.github.myapplication.data.source.remote.RemoteDataSource
 import com.github.myapplication.ui.MyApplication
 import com.github.myapplication.utils.observeOnce
 import kotlinx.coroutines.launch
