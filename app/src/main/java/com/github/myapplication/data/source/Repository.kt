@@ -6,50 +6,40 @@ import com.github.myapplication.data.source.remote.RemoteDataSource
 /**
  * Created by Muhammad Firdaus on 25/11/2019.
  */
-class Repository(val remoteDataSource: RemoteDataSource) : DataSource {
+class Repository : DataSource {
+
+    private val remoteDataSource = RemoteDataSource()
+
     // remote repo
-    override fun getAllData(type: String, filter: String, callback: DataSource.GetAllDataCallback) {
+    suspend fun getAllData(type: String, filter: String, callback: DataSource.GetAllDataCallback) {
         remoteDataSource.getAllData(type, filter, object : DataSource.GetAllDataCallback {
             override fun onSuccess(data: List<MovieModel>) {
                 callback.onSuccess(data)
             }
 
-            override fun onFailed(statusCode: Int, errorMessage: String?) {
-                callback.onFailed(statusCode, errorMessage)
-            }
-
-            override fun onFinish() {
-                callback.onFinish()
+            override fun onFailed(errorMessage: String?) {
+                callback.onFailed(errorMessage)
             }
         })
     }
 
-    override fun getDataById(type: String, id: Int, callback: DataSource.GetDataByIdCallback) {
+    suspend fun getDataById(type: String, id: Int, callback: DataSource.GetDataByIdCallback) {
         remoteDataSource.getDataById(type, id, object : DataSource.GetDataByIdCallback {
             override fun onSuccess(data: MovieModel) {
                 callback.onSuccess(data)
             }
 
-            override fun onFailed(statusCode: Int, errorMessage: String?) {
-                callback.onFailed(statusCode, errorMessage)
-            }
-
-            override fun onFinish() {
-                callback.onFinish()
+            override fun onFailed(errorMessage: String?) {
+                callback.onFailed(errorMessage)
             }
         })
     }
 
     companion object {
 
-        var mRepository: Repository? = null
-
-        @JvmStatic
-        fun getInstance(remoteDataSource: RemoteDataSource): Repository {
-            if (mRepository == null) {
-                mRepository = Repository(remoteDataSource = remoteDataSource)
-            }
-            return mRepository!!
-        }
+//        @Volatile private var INSTANCE: Repository? = null
+//        fun getInstance(remoteRepository: RemoteDataSource) = INSTANCE ?: synchronized(Repository::class.java){
+//            INSTANCE ?: Repository(remoteRepository).also { INSTANCE = it }
+//        }
     }
 }

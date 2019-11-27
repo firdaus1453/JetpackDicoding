@@ -9,18 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
-import com.github.myapplication.ui.detail.detailtvshow.DetailTvShowActivity
+import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
 import com.github.myapplication.ui.main.MainAdapter
 import com.github.myapplication.utils.Constants
 import com.github.myapplication.utils.gone
 import com.github.myapplication.utils.obtainViewModel
 import com.github.myapplication.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 
 class TvShowFragment : Fragment() {
 
     private lateinit var mViewModel: TvShowViewModel
+    private lateinit var adapter: MainAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,27 +34,23 @@ class TvShowFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         setupViewModel()
+        setupRecycler()
         setupRefresh()
     }
 
     private fun getData() {
-        mViewModel.getAllTvShows()
+        CoroutineScope(Dispatchers.Main).launch {
+            mViewModel.getAllTvShows()
+        }
     }
 
     private fun setupViewModel() {
         mViewModel = obtainVm()
         setupObserver()
-    }
-
-    private fun setupRefresh() {
-        swipe_refresh.setOnRefreshListener {
-            swipe_refresh.isRefreshing = false
-            getData()
-            goneAll()
-        }
+        getData()
     }
 
     private fun setupObserver() {
@@ -58,12 +58,7 @@ class TvShowFragment : Fragment() {
             getTvShowList().observe(viewLifecycleOwner, Observer {
                 constrain_data_not_found.gone()
                 recycler_movie.visible()
-                recycler_movie.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = MainAdapter(it) { idTvShow ->
-                        context?.startActivity<DetailTvShowActivity>(Constants.KEY_TVSHOW to idTvShow)
-                    }
-                }
+                adapter.setContentList(it)
             })
 
             eventGlobalMessage.observe(this@TvShowFragment, Observer {
@@ -82,6 +77,24 @@ class TvShowFragment : Fragment() {
                     progress_bar.gone()
                 }
             })
+        }
+    }
+
+    private fun setupRecycler() {
+        adapter = MainAdapter { idMovie ->
+            context?.startActivity<DetailMovieActivity>(Constants.KEY_MOVIE to idMovie)
+        }
+        recycler_movie.let {
+            it.adapter = adapter
+            it.layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun setupRefresh() {
+        swipe_refresh.setOnRefreshListener {
+            swipe_refresh.isRefreshing = false
+            getData()
+            goneAll()
         }
     }
 

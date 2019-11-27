@@ -1,17 +1,17 @@
 package com.github.myapplication.ui.detail
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.myapplication.base.BaseViewModel
 import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.data.source.DataSource
-import com.github.myapplication.data.source.Repository
 import com.github.myapplication.utils.Constants
 
 /**
  * Created by Muhammad Firdaus on 25/11/2019.
  */
-class DetailViewModel(private val mRepository: Repository) : BaseViewModel() {
+class DetailViewModel(application: Application) : BaseViewModel(application) {
 
     private val movieData = MutableLiveData<MovieModel>()
     private val tvShowData = MutableLiveData<MovieModel>()
@@ -24,10 +24,10 @@ class DetailViewModel(private val mRepository: Repository) : BaseViewModel() {
         return tvShowData
     }
 
-    fun getDetailMovie(id: Int) {
+    suspend fun getDetailMovie(id: Int) {
         eventShowProgress.value = true
 
-        mRepository.remoteDataSource.getDataById(Constants.TYPE_MOVIE, id, object : DataSource.GetDataByIdCallback {
+        getRepository().getDataById(Constants.TYPE_MOVIE, id, object : DataSource.GetDataByIdCallback {
             override fun onSuccess(data: MovieModel) {
                 eventShowProgress.value = false
                 movieData.apply {
@@ -36,9 +36,8 @@ class DetailViewModel(private val mRepository: Repository) : BaseViewModel() {
                 }
             }
 
-            override fun onFinish() {}
 
-            override fun onFailed(statusCode: Int, errorMessage: String?) {
+            override fun onFailed(errorMessage: String?) {
                 eventShowProgress.value = false
                 eventGlobalMessage.value = errorMessage
             }
@@ -46,10 +45,10 @@ class DetailViewModel(private val mRepository: Repository) : BaseViewModel() {
         })
     }
 
-    fun getDetailTvShow(id: Int) {
+    suspend fun getDetailTvShow(id: Int) {
         eventShowProgress.value = true
 
-        mRepository.remoteDataSource.getDataById(Constants.TYPE_TV, id, object : DataSource.GetDataByIdCallback {
+        getRepository().getDataById(Constants.TYPE_TV, id, object : DataSource.GetDataByIdCallback {
             override fun onSuccess(data: MovieModel) {
                 eventShowProgress.value = false
                 tvShowData.apply {
@@ -58,9 +57,7 @@ class DetailViewModel(private val mRepository: Repository) : BaseViewModel() {
                 }
             }
 
-            override fun onFinish() {}
-
-            override fun onFailed(statusCode: Int, errorMessage: String?) {
+            override fun onFailed(errorMessage: String?) {
                 eventShowProgress.value = false
                 eventGlobalMessage.value = errorMessage
             }

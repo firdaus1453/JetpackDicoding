@@ -34,6 +34,12 @@ android {
             debuggable true
         }
     }
+    androidExtensions {
+        experimental = true
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 
     buildTypes.each {
         it.buildConfigField 'String', 'MOVIE_DB_API_KEY', MovieDbApiKey
@@ -74,12 +80,10 @@ dependencies {
     implementation libraries.anko
     debugImplementation libraries.chuckOkHttpLogging
 
-    // Rx
-    implementation libraries.rxAndroid
-    implementation libraries.rxJava
-
     // Coroutine
     implementation libraries.coroutine
+    implementation libraries.coroutineAdapter
+    implementation libraries.coroutineCore
 
     // Utils
     implementation libraries.glide
@@ -97,5 +101,5 @@ dependencies {
     testImplementation testLibraries.mockitoInline
     testImplementation testLibraries.archTest
     testImplementation testLibraries.coroutineTest
-
+    implementation testLibraries.idling
 }

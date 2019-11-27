@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.github.myapplication.utils.Constants.SERVER_ERROR_MESSAGE_DEFAULT
-import com.github.myapplication.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -53,10 +52,10 @@ fun View.showSnackbarDefault(
 }
 
 fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProviders.of(this, ViewModelFactory.getInstance(application)).get(viewModelClass)
+    ViewModelProviders.of(this).get(viewModelClass)
 
 fun <T : ViewModel> Fragment.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProviders.of(this, ViewModelFactory.getInstance(requireActivity().application)).get(viewModelClass)
+    ViewModelProviders.of(this).get(viewModelClass)
 
 fun createCircularProgressDrawable(context: Context): CircularProgressDrawable {
     val circularProgressDrawable = CircularProgressDrawable(context)

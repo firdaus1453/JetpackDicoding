@@ -3,6 +3,7 @@ package com.github.myapplication.ui.content
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.data.source.Repository
+import com.github.myapplication.ui.MyApplication
 import com.github.myapplication.ui.main.tvshow.TvShowViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -25,7 +26,7 @@ class MainViewModelTest {
 
     @Before
     fun setUp() {
-        mViewModel = TvShowViewModel(data)
+        mViewModel = TvShowViewModel(Mockito.mock(MyApplication::class.java))
 //        itemList = MovieModel()
     }
     @Test

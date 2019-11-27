@@ -12,6 +12,9 @@ import com.github.myapplication.ui.detail.DetailViewModel
 import com.github.myapplication.utils.*
 import com.github.myapplication.utils.Constants.KEY_MOVIE
 import kotlinx.android.synthetic.main.activity_detail_movie.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -30,7 +33,9 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        mViewModel.getDetailMovie(idMovie)
+        CoroutineScope(Dispatchers.IO).launch {
+            mViewModel.getDetailMovie(idMovie)
+        }
     }
 
     private fun setupViewModel() {

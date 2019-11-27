@@ -1,49 +1,44 @@
 package com.github.myapplication.data.source.remote
 
-import android.content.Context
 import com.github.myapplication.BuildConfig.MOVIE_DB_API_KEY
-import com.github.myapplication.base.BaseApiModel
-import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.data.source.DataSource
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.github.myapplication.utils.EspressoIdlingResource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Created by Muhammad Firdaus on 25/11/2019.
  */
-class RemoteDataSource(context: Context) : DataSource {
+class RemoteDataSource {
 
-    private val mApiService = ApiService.getApiService(context)
+    private val mApiService = ApiService.getApiService()
 
-    override fun getAllData(type: String, filter: String, callback: DataSource.GetAllDataCallback) {
-        mApiService.getAllData(type, filter, MOVIE_DB_API_KEY)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : ApiCallback<BaseApiModel<List<MovieModel>>>() {
-                override fun onSuccess(model: BaseApiModel<List<MovieModel>>) {
-                    val newData = model.results ?: listOf()
+    suspend fun getAllData(type: String, filter: String, callback: DataSource.GetAllDataCallback) {
+        EspressoIdlingResource.increment()
+            try {
+                val response = mApiService.getAllDataAsync(type, filter, MOVIE_DB_API_KEY).await()
+                withContext(Dispatchers.Main) {
+                    val newData = response.results ?: listOf()
                     callback.onSuccess(newData)
+                    EspressoIdlingResource.decrement()
                 }
-
-                override fun onFailure(code: Int, errorMessage: String) {
-                    callback.onFailed(code, errorMessage)
-                }
-
-            })
+            } catch (e: Exception) {
+                callback.onFailed(e.message)
+            }
     }
 
-    override fun getDataById(type: String, id: Int, callback: DataSource.GetDataByIdCallback) {
-        mApiService.getDataById(type, id, MOVIE_DB_API_KEY)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : ApiCallback<MovieModel>() {
-                override fun onSuccess(model: MovieModel) {
-                    callback.onSuccess(model)
-                }
+    suspend fun getDataById(type: String, id: Int, callback: DataSource.GetDataByIdCallback) {
+        try {
+            mApiService.getDataByIdAsync(type, id, MOVIE_DB_API_KEY).await().let { callback.onSuccess(it) }
+        } catch (e: Exception) {
+            callback.onFailed(e.message)
+        }
+    }
 
-                override fun onFailure(code: Int, errorMessage: String) {
-                    callback.onFailed(code, errorMessage)
-                }
-            })
+    companion object{
+        private var INSTANCE: RemoteDataSource? = null
+        fun getInstance() = INSTANCE ?: RemoteDataSource()
     }
 }

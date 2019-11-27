@@ -16,11 +16,15 @@ import com.github.myapplication.utils.gone
 import com.github.myapplication.utils.obtainViewModel
 import com.github.myapplication.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 
 class MovieFragment : Fragment() {
 
     private lateinit var mViewModel: MovieViewModel
+    private lateinit var adapter: MainAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,27 +34,23 @@ class MovieFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         setupViewModel()
+        setupRecycler()
         setupRefresh()
     }
 
     private fun getData() {
-        mViewModel.getAllMovies()
+        CoroutineScope(Dispatchers.Main).launch {
+            mViewModel.getAllMovies()
+        }
     }
 
     private fun setupViewModel() {
         mViewModel = obtainVm()
         setupObserver()
-    }
-
-    private fun setupRefresh() {
-        swipe_refresh.setOnRefreshListener {
-            swipe_refresh.isRefreshing = false
-            getData()
-            goneAll()
-        }
+        getData()
     }
 
     private fun setupObserver() {
@@ -58,13 +58,7 @@ class MovieFragment : Fragment() {
             getMovieList().observe(viewLifecycleOwner, Observer {
                 constrain_data_not_found.gone()
                 recycler_movie.visible()
-                recycler_movie.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = MainAdapter(it) { idMovie ->
-                        context?.startActivity<DetailMovieActivity>(KEY_MOVIE to idMovie)
-                    }
-                }
-
+                adapter.setContentList(it)
             })
 
             eventGlobalMessage.observe(this@MovieFragment, Observer {
@@ -83,6 +77,24 @@ class MovieFragment : Fragment() {
                     progress_bar.gone()
                 }
             })
+        }
+    }
+
+    private fun setupRecycler() {
+        adapter = MainAdapter { idMovie ->
+            context?.startActivity<DetailMovieActivity>(KEY_MOVIE to idMovie)
+        }
+        recycler_movie.let {
+            it.adapter = adapter
+            it.layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun setupRefresh() {
+        swipe_refresh.setOnRefreshListener {
+            swipe_refresh.isRefreshing = false
+            getData()
+            goneAll()
         }
     }
 

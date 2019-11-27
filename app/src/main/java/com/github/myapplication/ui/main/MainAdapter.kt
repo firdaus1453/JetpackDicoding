@@ -16,15 +16,25 @@ import kotlinx.android.synthetic.main.item_list.view.*
 /**
  * Created by Muhammad Firdaus on 24/11/2019.
  */
-class MainAdapter(private val contentList: List<MovieModel>, private val listener: (Int) -> Unit) :
-    RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(private val listener: (Int) -> Unit) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(parent.inflate(R.layout.item_list))
+    private val contentList = ArrayList<MovieModel>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent.inflate(R.layout.item_list))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(contentList[position], listener)
 
     override fun getItemCount() = contentList.size
+
+    fun setContentList(data: List<MovieModel>?) {
+        data?.let {
+            this.contentList.apply {
+                clear()
+                addAll(it)
+            }
+            notifyDataSetChanged()
+        }
+    }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: MovieModel, listener: (Int) -> Unit) = with(itemView) {

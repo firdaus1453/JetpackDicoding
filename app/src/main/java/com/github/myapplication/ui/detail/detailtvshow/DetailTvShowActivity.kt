@@ -11,6 +11,9 @@ import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.ui.detail.DetailViewModel
 import com.github.myapplication.utils.*
 import kotlinx.android.synthetic.main.activity_detail_movie.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DetailTvShowActivity : AppCompatActivity() {
 
@@ -29,7 +32,9 @@ class DetailTvShowActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        mViewModel.getDetailTvShow(idTvShow)
+        CoroutineScope(Dispatchers.IO).launch {
+            mViewModel.getDetailTvShow(idTvShow)
+        }
     }
 
     private fun setupViewModel() {
