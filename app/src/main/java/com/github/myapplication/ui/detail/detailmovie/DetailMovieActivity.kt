@@ -20,10 +20,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private lateinit var mViewModel: DetailViewModel
 
-    private val idMovie by lazy {
-        intent.getIntExtra(KEY_MOVIE, 0)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
@@ -33,8 +29,10 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        CoroutineScope(Dispatchers.IO).launch {
-            mViewModel.getDetailMovie(idMovie)
+        intent.getIntExtra(KEY_MOVIE, 0).let {
+            CoroutineScope(Dispatchers.Main).launch {
+                mViewModel.getDetailMovie(it)
+            }
         }
     }
 

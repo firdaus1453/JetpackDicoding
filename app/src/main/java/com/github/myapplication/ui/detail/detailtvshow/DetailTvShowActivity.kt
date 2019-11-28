@@ -19,10 +19,6 @@ class DetailTvShowActivity : AppCompatActivity() {
 
     private lateinit var mViewModel: DetailViewModel
 
-    private val idTvShow by lazy {
-        intent.getIntExtra(Constants.KEY_TVSHOW, 0)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
@@ -32,8 +28,10 @@ class DetailTvShowActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        CoroutineScope(Dispatchers.IO).launch {
-            mViewModel.getDetailTvShow(idTvShow)
+        intent.getIntExtra(Constants.KEY_TVSHOW, 0).let {
+            CoroutineScope(Dispatchers.Main).launch {
+                mViewModel.getDetailTvShow(it)
+            }
         }
     }
 

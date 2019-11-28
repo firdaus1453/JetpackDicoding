@@ -95,8 +95,8 @@ dependencies {
     // Unit Test
     testImplementation testLibraries.junit
     testImplementation testLibraries.junitRunner
-    testImplementation testLibraries.espressoCore
-    testImplementation testLibraries.rules
+    androidTestImplementation testLibraries.espressoCore
+    androidTestImplementation testLibraries.rules
     testImplementation testLibraries.mockito
     testImplementation testLibraries.mockitoInline
     testImplementation testLibraries.archTest

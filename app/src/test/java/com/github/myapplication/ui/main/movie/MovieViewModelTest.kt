@@ -29,10 +29,7 @@ class MovieViewModelTest {
     @Test
     fun movies() = runBlocking {
         launch { viewModel.getAllMovies() }
-        viewModel.movies.observeOnce { Assert.assertEquals(0, it.size) }
-//        val observer = mock(Observer::class.java)
-//        viewModel.movies.observeForever(observer as Observer<List<MovieModel>>)
-//        Assert.assertEquals(0, viewModel.movies.value?.size)
+        viewModel.getMovieList().observeOnce { Assert.assertNotEquals(0, it.size) }
     }
 
 }

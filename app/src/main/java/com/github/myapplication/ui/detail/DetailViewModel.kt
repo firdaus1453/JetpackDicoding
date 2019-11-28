@@ -7,6 +7,7 @@ import com.github.myapplication.base.BaseViewModel
 import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.data.source.DataSource
 import com.github.myapplication.utils.Constants
+import com.github.myapplication.utils.EspressoIdlingResource
 
 /**
  * Created by Muhammad Firdaus on 25/11/2019.
@@ -25,14 +26,17 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
     }
 
     suspend fun getDetailMovie(id: Int) {
+        EspressoIdlingResource.increment()
         eventShowProgress.value = true
 
         getRepository().getDataById(Constants.TYPE_MOVIE, id, object : DataSource.GetDataByIdCallback {
             override fun onSuccess(data: MovieModel) {
                 eventShowProgress.value = false
                 movieData.apply {
-                    postValue(null)
                     postValue(data)
+                }
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    EspressoIdlingResource.decrement()
                 }
             }
 
@@ -46,14 +50,17 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
     }
 
     suspend fun getDetailTvShow(id: Int) {
+        EspressoIdlingResource.increment()
         eventShowProgress.value = true
 
         getRepository().getDataById(Constants.TYPE_TV, id, object : DataSource.GetDataByIdCallback {
             override fun onSuccess(data: MovieModel) {
                 eventShowProgress.value = false
                 tvShowData.apply {
-                    postValue(null)
                     postValue(data)
+                }
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    EspressoIdlingResource.decrement()
                 }
             }
 

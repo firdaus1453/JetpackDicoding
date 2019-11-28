@@ -12,12 +12,10 @@ class RemoteDataSource {
     private val mApiService = ApiService.getApiService()
 
     suspend fun getAllData(type: String, filter: String, callback: DataSource.GetAllDataCallback) {
-        EspressoIdlingResource.increment()
         try {
             val response = mApiService.getAllDataAsync(type, filter, MOVIE_DB_API_KEY).await()
             val newData = response.results ?: listOf()
             callback.onSuccess(newData)
-            EspressoIdlingResource.decrement()
         } catch (e: Exception) {
             callback.onFailed(e.message)
         }
@@ -29,10 +27,5 @@ class RemoteDataSource {
         } catch (e: Exception) {
             callback.onFailed(e.message)
         }
-    }
-
-    companion object {
-        private var INSTANCE: RemoteDataSource? = null
-        fun getInstance() = INSTANCE ?: RemoteDataSource()
     }
 }

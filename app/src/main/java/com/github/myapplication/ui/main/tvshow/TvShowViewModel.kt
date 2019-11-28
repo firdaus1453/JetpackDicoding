@@ -10,6 +10,7 @@ import com.github.myapplication.data.source.DataSource
 import com.github.myapplication.data.source.Repository
 import com.github.myapplication.utils.Constants.FILTER_TOP_RATED
 import com.github.myapplication.utils.Constants.TYPE_TV
+import com.github.myapplication.utils.EspressoIdlingResource
 
 
 /**
@@ -18,10 +19,10 @@ import com.github.myapplication.utils.Constants.TYPE_TV
 
 class TvShowViewModel(application: Application) : BaseViewModel(application) {
 
-    val tvShowList = MutableLiveData<List<MovieModel>>()
-    val tvSHow: LiveData<List<MovieModel>> = Transformations.map(tvShowList) { it }
+    private val tvShowList = MutableLiveData<List<MovieModel>>()
 
     suspend fun getAllTvShows() {
+        EspressoIdlingResource.increment()
         eventShowProgress.value = true
         getRepository().getAllData(TYPE_TV, FILTER_TOP_RATED, object : DataSource.GetAllDataCallback {
             override fun onSuccess(data: List<MovieModel>) {
@@ -30,6 +31,9 @@ class TvShowViewModel(application: Application) : BaseViewModel(application) {
                     tvShowList.apply {
                         postValue(null)
                         postValue(data)
+                    }
+                    if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                        EspressoIdlingResource.decrement()
                     }
                 }
             }
