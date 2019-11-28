@@ -1,6 +1,7 @@
 package com.github.myapplication.data.source
 
 import com.github.myapplication.data.model.MovieModel
+import com.github.myapplication.data.source.local.LocalDataSource
 import com.github.myapplication.data.source.remote.RemoteDataSource
 
 /**
@@ -9,6 +10,7 @@ import com.github.myapplication.data.source.remote.RemoteDataSource
 class Repository : DataSource {
 
     private val remoteDataSource = RemoteDataSource()
+    private val localDataSource = LocalDataSource()
 
     // remote repo
     suspend fun getAllData(type: String, filter: String, callback: DataSource.GetAllDataCallback) {
@@ -35,11 +37,36 @@ class Repository : DataSource {
         })
     }
 
-    companion object {
+    // local repo
+    fun saveOneToLocalData(data: MovieModel) {
+        localDataSource.saveOneToLocalData(data)
+    }
 
-//        @Volatile private var INSTANCE: Repository? = null
-//        fun getInstance(remoteRepository: RemoteDataSource) = INSTANCE ?: synchronized(Repository::class.java){
-//            INSTANCE ?: Repository(remoteRepository).also { INSTANCE = it }
-//        }
+    fun getAllLocalData(callback: DataSource.GetAllDataCallback) {
+        localDataSource.getAllLocalData(object : DataSource.GetAllDataCallback {
+            override fun onSuccess(data: List<MovieModel>) {
+                callback.onSuccess(data)
+            }
+
+            override fun onFailed(errorMessage: String?) {
+                callback.onFailed(errorMessage)
+            }
+        })
+    }
+
+    fun getLocalDataById(id: Int, callback: DataSource.GetDataByIdCallback) {
+        localDataSource.getLocalDataById(id, object : DataSource.GetDataByIdCallback {
+            override fun onSuccess(data: MovieModel) {
+                callback.onSuccess(data)
+            }
+
+            override fun onFailed(errorMessage: String?) {
+                callback.onFailed(errorMessage)
+            }
+        })
+    }
+
+    fun deleteLocalDataById(id: Int) {
+        localDataSource.deleteLocalDataById(id)
     }
 }

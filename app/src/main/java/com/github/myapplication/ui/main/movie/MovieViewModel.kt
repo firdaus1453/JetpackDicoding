@@ -3,7 +3,6 @@ package com.github.myapplication.ui.main.movie
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.github.myapplication.base.BaseViewModel
 import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.data.source.DataSource

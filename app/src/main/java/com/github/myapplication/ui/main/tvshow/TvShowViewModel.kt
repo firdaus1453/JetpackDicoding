@@ -3,11 +3,9 @@ package com.github.myapplication.ui.main.tvshow
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.github.myapplication.base.BaseViewModel
 import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.data.source.DataSource
-import com.github.myapplication.data.source.Repository
 import com.github.myapplication.utils.Constants.FILTER_TOP_RATED
 import com.github.myapplication.utils.Constants.TYPE_TV
 import com.github.myapplication.utils.EspressoIdlingResource
