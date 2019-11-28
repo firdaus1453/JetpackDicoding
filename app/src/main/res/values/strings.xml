@@ -6,4 +6,6 @@
     <string name="year">Desember 21, 2018</string>
     <string name="img_description">Gambar Movie</string>
     <string name="data_tidak_ada_silahkan_coba_lagi">Data tidak ada, silahkan coba lagi</string>
+    <string name="movies">Movies</string>
+    <string name="tv_show">TV Show</string>
 </resources>
