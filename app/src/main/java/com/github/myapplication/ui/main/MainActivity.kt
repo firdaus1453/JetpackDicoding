@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.github.myapplication.R
-import com.github.myapplication.ui.main.favorite.FavoriteFragment
+import com.github.myapplication.ui.main.favorite.MainFavoriteFragment
 import com.github.myapplication.ui.main.movie.MovieFragment
 import com.github.myapplication.ui.main.tvshow.TvShowFragment
 import com.github.myapplication.utils.Constants.KEY_FRAGMENT
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_favorite -> {
-                    loadFragment(FavoriteFragment.newInstance())
+                    loadFragment(MainFavoriteFragment.newInstance())
                     return@OnNavigationItemSelectedListener true
                 }
             }

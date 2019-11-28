@@ -1,4 +1,4 @@
-package com.github.myapplication.ui.main
+package com.github.myapplication.ui.main.favorite
 
 import android.content.Context
 import androidx.fragment.app.Fragment
@@ -6,8 +6,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.github.myapplication.R
-import com.github.myapplication.ui.main.movie.MovieFragment
-import com.github.myapplication.ui.main.tvshow.TvShowFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,
@@ -18,22 +16,18 @@ private val TAB_TITLES = arrayOf(
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class MainPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
-
-    private val pages = listOf(
-        MovieFragment(),
-        TvShowFragment()
-    )
+class FavoritePagerAdapter(private val context: Context?, private val fragments: List<Fragment>, fm: FragmentManager) :
+    FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return pages[position]
+        return fragments[position]
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return context.resources.getString(TAB_TITLES[position])
+        return context?.resources?.getString(TAB_TITLES[position])
     }
 
     override fun getCount(): Int {
-        return pages.size
+        return fragments.size
     }
 }

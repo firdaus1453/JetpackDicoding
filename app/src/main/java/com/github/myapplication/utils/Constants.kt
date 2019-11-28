@@ -7,7 +7,8 @@ object Constants {
     const val KEY_MOVIE = "KEY_MOVIE"
     const val KEY_TVSHOW = "KEY_TVSHOW"
     const val KEY_FRAGMENT = "KEY_FRAGMENT"
-
+    const val CATEGORY_MOVIE = 1
+    const val CATEGORY_TV = 2
 
     // Type data
     const val TYPE_MOVIE = "movie"
