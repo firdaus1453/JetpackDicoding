@@ -34,10 +34,10 @@ class LocalDataSource {
         }
     }
 
-    fun getAllLocalData(callback: DataSource.GetAllDataCallback) {
+    fun getAllLocalData(type: Int, callback: DataSource.GetAllDataCallback) {
         try {
-            movieDao?.getAllLocalData().let {
-                if (!it.isNullOrEmpty()) callback.onSuccess(it)
+            movieDao?.getAllLocalData(type).let {
+                if (!it.isNullOrEmpty()) callback.onSuccess(it) else callback.onFailed("Belum ada data Favorite")
             }
         } catch (exception: Exception) {
             callback.onFailed(exception.message)
@@ -49,14 +49,6 @@ class LocalDataSource {
             movieDao?.getLocalDataById(id)?.let { callback.onSuccess(it) }
         } catch (exception: Exception) {
             callback.onFailed(exception.message)
-        }
-    }
-
-    fun deleteLocalDataById(id: Int) {
-        try {
-            movieDao?.deleteLocalDataById(id)
-        } catch (exception: Exception) {
-            Log.e(TAG, exception.message.toString())
         }
     }
 

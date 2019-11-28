@@ -2,7 +2,6 @@ package com.github.myapplication.data.source.remote
 
 import com.github.myapplication.BuildConfig.MOVIE_DB_API_KEY
 import com.github.myapplication.data.source.DataSource
-import com.github.myapplication.utils.EspressoIdlingResource
 
 /**
  * Created by Muhammad Firdaus on 25/11/2019.

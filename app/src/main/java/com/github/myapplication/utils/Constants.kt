@@ -32,4 +32,5 @@ object Constants {
     const val COLUMN_POSTERPATH = "posterPath"
     const val COLUMN_VOTE_AVERAGE = "vote_average"
     const val COLUMN_FAVORITE = "favorite"
+    const val COLUMN_TYPE = "type"
 }

@@ -11,6 +11,8 @@
     <string name="movies">Movies</string>
     <string name="tv_show">TV Show</string>
     <string name="favorite">Favorite</string>
+    <string name="save_success">Add To Favorite</string>
+    <string name="remove_success">Remove from Favorite</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

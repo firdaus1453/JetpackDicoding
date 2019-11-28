@@ -55,7 +55,7 @@ class MovieFragment : Fragment() {
 
     private fun setupObserver() {
         mViewModel.apply {
-            getMovieList().observe(viewLifecycleOwner, Observer {
+            getMovieList().observe(this@MovieFragment, Observer {
                 constrain_data_not_found.gone()
                 recycler_movie.visible()
                 adapter.setContentList(it)

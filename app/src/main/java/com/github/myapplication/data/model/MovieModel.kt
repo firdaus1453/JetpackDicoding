@@ -13,6 +13,7 @@ import com.github.myapplication.utils.Constants.COLUMN_OVERVIEW
 import com.github.myapplication.utils.Constants.COLUMN_POSTERPATH
 import com.github.myapplication.utils.Constants.COLUMN_RELEASEDATE
 import com.github.myapplication.utils.Constants.COLUMN_TITLE
+import com.github.myapplication.utils.Constants.COLUMN_TYPE
 import com.github.myapplication.utils.Constants.COLUMN_VOTE_AVERAGE
 import com.github.myapplication.utils.Constants.TABLE_NAME
 import kotlinx.android.parcel.Parcelize
@@ -26,9 +27,6 @@ data class MovieModel(
     @PrimaryKey
     @ColumnInfo(name = COLUMN_ID)
     var id: Int? = 0,
-
-    @ColumnInfo(name = COLUMN_IDMOVIE)
-    var idMovie: Int? = 0,
 
     @ColumnInfo(name = COLUMN_TITLE)
     var title: String? = "",
@@ -50,6 +48,9 @@ data class MovieModel(
 
     @ColumnInfo(name = COLUMN_VOTE_AVERAGE)
     var vote_average: Double? = 0.0,
+
+    @ColumnInfo(name = COLUMN_TYPE)
+    var type: Int,
 
     @ColumnInfo(name = COLUMN_FAVORITE)
     var favorite: String? = ""

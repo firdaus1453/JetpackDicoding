@@ -81,6 +81,10 @@ dependencies {
     implementation libraries.anko
     debugImplementation libraries.chuckOkHttpLogging
 
+    // Rx
+    implementation libraries.rxAndroid
+    implementation libraries.rxJava
+
     // Coroutine
     implementation libraries.coroutine
     implementation libraries.coroutineAdapter

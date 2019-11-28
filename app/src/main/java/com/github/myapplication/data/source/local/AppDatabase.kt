@@ -35,7 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java, "Movie.db"
-            )
+            ).allowMainThreadQueries()
                 .build()
     }
 }

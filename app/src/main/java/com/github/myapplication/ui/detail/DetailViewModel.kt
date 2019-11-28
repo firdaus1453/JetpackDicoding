@@ -7,6 +7,8 @@ import com.github.myapplication.base.BaseViewModel
 import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.data.source.DataSource
 import com.github.myapplication.utils.Constants
+import com.github.myapplication.utils.Constants.CATEGORY_MOVIE
+import com.github.myapplication.utils.Constants.CATEGORY_TV
 import com.github.myapplication.utils.EspressoIdlingResource
 
 /**
@@ -17,12 +19,32 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
     private val movieData = MutableLiveData<MovieModel>()
     private val tvShowData = MutableLiveData<MovieModel>()
 
-    fun getMovieData(): LiveData<MovieModel> {
-        return movieData
+    var check = MutableLiveData<Boolean>()
+
+    fun getMovieData(): LiveData<MovieModel> = movieData
+    fun getTvShowData(): LiveData<MovieModel> = tvShowData
+
+    fun checkFavorite(movieId: Int): Boolean {
+        var bFavorite = false
+        getRepository().getLocalDataById(movieId, object : DataSource.GetDataByIdCallback {
+            override fun onSuccess(data: MovieModel) {
+                bFavorite = data.id != null
+            }
+
+            override fun onFailed(errorMessage: String?) {
+            }
+        })
+        return bFavorite
     }
 
-    fun getTvShowData(): LiveData<MovieModel> {
-        return tvShowData
+    fun addToFavorite(data : MovieModel){
+        getRepository().saveOneToLocalData(data)
+        check.value = true
+    }
+
+    fun removeFavorite(data: MovieModel) {
+        getRepository().deleteLocalData(data)
+        check.value = false
     }
 
     suspend fun getDetailMovie(id: Int) {
@@ -33,13 +55,13 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
             override fun onSuccess(data: MovieModel) {
                 eventShowProgress.value = false
                 movieData.apply {
+                    data.type = CATEGORY_MOVIE
                     postValue(data)
                 }
                 if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                     EspressoIdlingResource.decrement()
                 }
             }
-
 
             override fun onFailed(errorMessage: String?) {
                 eventShowProgress.value = false
@@ -57,6 +79,7 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
             override fun onSuccess(data: MovieModel) {
                 eventShowProgress.value = false
                 tvShowData.apply {
+                    data.type = CATEGORY_TV
                     postValue(data)
                 }
                 if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {

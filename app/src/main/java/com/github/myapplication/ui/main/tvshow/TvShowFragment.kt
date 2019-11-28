@@ -55,7 +55,7 @@ class TvShowFragment : Fragment() {
 
     private fun setupObserver() {
         mViewModel.apply {
-            getTvShowList().observe(viewLifecycleOwner, Observer {
+            getTvShowList().observe(this@TvShowFragment, Observer {
                 constrain_data_not_found.gone()
                 recycler_movie.visible()
                 adapter.setContentList(it)

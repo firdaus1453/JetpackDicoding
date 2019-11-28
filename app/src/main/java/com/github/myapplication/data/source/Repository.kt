@@ -42,8 +42,8 @@ class Repository : DataSource {
         localDataSource.saveOneToLocalData(data)
     }
 
-    fun getAllLocalData(callback: DataSource.GetAllDataCallback) {
-        localDataSource.getAllLocalData(object : DataSource.GetAllDataCallback {
+    fun getAllLocalData(type: Int, callback: DataSource.GetAllDataCallback) {
+        localDataSource.getAllLocalData(type, object : DataSource.GetAllDataCallback {
             override fun onSuccess(data: List<MovieModel>) {
                 callback.onSuccess(data)
             }
@@ -66,7 +66,7 @@ class Repository : DataSource {
         })
     }
 
-    fun deleteLocalDataById(id: Int) {
-        localDataSource.deleteLocalDataById(id)
+    fun deleteLocalData(data: MovieModel) {
+        localDataSource.deleteLocalData(data)
     }
 }
