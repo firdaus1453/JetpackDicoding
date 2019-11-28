@@ -6,6 +6,8 @@ package com.github.myapplication.utils
 object Constants {
     const val KEY_MOVIE = "KEY_MOVIE"
     const val KEY_TVSHOW = "KEY_TVSHOW"
+    const val KEY_FRAGMENT = "KEY_FRAGMENT"
+
 
     // Type data
     const val TYPE_MOVIE = "movie"

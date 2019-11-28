@@ -68,6 +68,7 @@ dependencies {
     implementation googleLibraries.archLcJava
     implementation googleLibraries.material
     implementation googleLibraries.lifecycle
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor googleLibraries.archRoomComp
     annotationProcessor googleLibraries.lifecycleCompiler
     kapt googleLibraries.archRoomComp

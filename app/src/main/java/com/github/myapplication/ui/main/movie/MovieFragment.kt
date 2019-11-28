@@ -104,4 +104,8 @@ class MovieFragment : Fragment() {
         recycler_movie.gone()
         constrain_data_not_found.gone()
     }
+
+    companion object {
+        fun newInstance() = MovieFragment()
+    }
 }
