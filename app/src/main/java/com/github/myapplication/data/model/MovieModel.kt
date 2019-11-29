@@ -54,5 +54,5 @@ data class MovieModel(
     var vote_average: Double? = 0.0,
 
     @ColumnInfo(name = COLUMN_TYPE)
-    var type: Int
+    var type_movie: Int
 ) : Parcelable

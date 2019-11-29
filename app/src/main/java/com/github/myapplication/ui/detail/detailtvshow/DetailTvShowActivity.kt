@@ -1,7 +1,10 @@
 package com.github.myapplication.ui.detail.detailtvshow
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -18,6 +21,9 @@ import kotlinx.coroutines.launch
 class DetailTvShowActivity : AppCompatActivity() {
 
     private lateinit var mViewModel: DetailViewModel
+    private var menu: Menu? = null
+    private var isFavorite: Boolean = false
+    private lateinit var mDataMovie: MovieModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +51,10 @@ class DetailTvShowActivity : AppCompatActivity() {
             getTvShowData().observe(this@DetailTvShowActivity, Observer {
                 visibleData(true)
                 showData(it)
+                mDataMovie = it
+                isFavorite = mViewModel.checkFavorite(it?.id ?: 0)
+                setFavorite()
+                menu?.getItem(0)?.isVisible = true
             })
 
             eventGlobalMessage.observe(this@DetailTvShowActivity, Observer {
@@ -62,6 +72,47 @@ class DetailTvShowActivity : AppCompatActivity() {
                     progress_bar_detail.gone()
                 }
             })
+
+
+            check.observe(this@DetailTvShowActivity, Observer {
+                if (it == true) {
+                    progress_bar_detail.showSnackbarDefault(getString(R.string.save_success))
+                } else {
+                    progress_bar_detail.showSnackbarDefault(getString(R.string.remove_success))
+                }
+            })
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        this.menu = menu
+        menuInflater.inflate(R.menu.menu_favorite, menu)
+        menu?.getItem(0)?.isVisible = false
+        setFavorite()
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+            R.id.action_favorite -> {
+                if (isFavorite) {
+                    mViewModel.removeFavorite(mDataMovie.id ?: 0)
+                } else {
+                    mViewModel.addToFavorite(mDataMovie)
+                }
+                isFavorite = mViewModel.checkFavorite(mDataMovie.id ?: 0)
+                setFavorite()
+            }
+        }
+        return true
+    }
+
+    private fun setFavorite() {
+        if (isFavorite) {
+            menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_check)
+        } else {
+            menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_uncheck)
         }
     }
 

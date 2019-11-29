@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
 import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
+import com.github.myapplication.ui.detail.detailtvshow.DetailTvShowActivity
 import com.github.myapplication.utils.Constants
 import com.github.myapplication.utils.Constants.CATEGORY_MOVIE
 import com.github.myapplication.utils.Constants.CATEGORY_TV
@@ -91,9 +92,19 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun setupRecycler() {
-        adapter = FavoriteAdapter { idMovie ->
-            context?.startActivity<DetailMovieActivity>(Constants.KEY_MOVIE to idMovie)
+        when (arguments?.getInt(ARG_SECTION_NUMBER) ?: 1) {
+            CATEGORY_MOVIE -> {
+                adapter = FavoriteAdapter { idMovie ->
+                    context?.startActivity<DetailMovieActivity>(Constants.KEY_MOVIE to idMovie)
+                }
+            }
+            CATEGORY_TV -> {
+                adapter = FavoriteAdapter { idTvShow ->
+                    context?.startActivity<DetailTvShowActivity>(Constants.KEY_TVSHOW to idTvShow)
+                }
+            }
         }
+
         recycler_favorite.let {
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(context)

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
-import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
+import com.github.myapplication.ui.detail.detailtvshow.DetailTvShowActivity
 import com.github.myapplication.ui.main.MainAdapter
 import com.github.myapplication.utils.Constants
 import com.github.myapplication.utils.gone
@@ -82,7 +82,7 @@ class TvShowFragment : Fragment() {
 
     private fun setupRecycler() {
         adapter = MainAdapter { idMovie ->
-            context?.startActivity<DetailMovieActivity>(Constants.KEY_MOVIE to idMovie)
+            context?.startActivity<DetailTvShowActivity>(Constants.KEY_TVSHOW to idMovie)
         }
         recycler_movie.let {
             it.adapter = adapter

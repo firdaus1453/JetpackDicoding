@@ -37,7 +37,7 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
         return bFavorite
     }
 
-    fun addToFavorite(data : MovieModel){
+    fun addToFavorite(data: MovieModel) {
         getRepository().saveOneToLocalData(data)
         check.value = true
     }
@@ -55,7 +55,7 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
             override fun onSuccess(data: MovieModel) {
                 eventShowProgress.value = false
                 movieData.apply {
-                    data.type = CATEGORY_MOVIE
+                    data.type_movie = CATEGORY_MOVIE
                     postValue(data)
                 }
                 if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
@@ -79,7 +79,7 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
             override fun onSuccess(data: MovieModel) {
                 eventShowProgress.value = false
                 tvShowData.apply {
-                    data.type = CATEGORY_TV
+                    data.type_movie = CATEGORY_TV
                     postValue(data)
                 }
                 if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {

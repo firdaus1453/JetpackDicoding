@@ -97,7 +97,7 @@ class DetailMovieActivity : AppCompatActivity() {
             android.R.id.home -> finish()
             R.id.action_favorite -> {
                 if (isFavorite) {
-                    mViewModel.removeFavorite(mDataMovie.id?:0)
+                    mViewModel.removeFavorite(mDataMovie.id ?: 0)
                 } else {
                     mViewModel.addToFavorite(mDataMovie)
                 }
