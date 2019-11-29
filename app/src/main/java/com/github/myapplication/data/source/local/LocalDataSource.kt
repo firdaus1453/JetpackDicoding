@@ -27,14 +27,6 @@ class LocalDataSource {
         }
     }
 
-    fun saveAllToLocalData(data: List<MovieModel>) {
-        try {
-            movieDao?.saveAllToLocalData(data)
-        } catch (exception: Exception) {
-            Log.e(TAG, exception.message.toString())
-        }
-    }
-
     fun getAllLocalData(type: Int): DS.Factory<Int, MovieModel>? = movieDao?.getAllLocalData(type)
 
     fun getLocalDataById(id: Int, callback: DataSource.GetDataByIdCallback) {

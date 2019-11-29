@@ -13,9 +13,6 @@ import com.github.myapplication.data.model.MovieModel
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveAllToLocalData(data: List<MovieModel>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveOneToLocalData(data: MovieModel)
 
     @Query("SELECT * FROM movie WHERE type IN(:type) ORDER BY idMovie DESC")
