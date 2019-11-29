@@ -42,8 +42,8 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
         check.value = true
     }
 
-    fun removeFavorite(data: MovieModel) {
-        getRepository().deleteLocalData(data)
+    fun removeFavorite(id: Int) {
+        getRepository().deleteLocalData(id)
         check.value = false
     }
 

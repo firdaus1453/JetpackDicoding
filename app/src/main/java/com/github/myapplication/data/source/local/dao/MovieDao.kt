@@ -1,6 +1,10 @@
 package com.github.myapplication.data.source.local.dao
 
-import androidx.room.*
+import androidx.paging.DataSource
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.github.myapplication.data.model.MovieModel
 
 /**
@@ -14,15 +18,12 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveOneToLocalData(data: MovieModel)
 
-    @Query("SELECT * FROM movie WHERE type = :type")
-    fun getAllLocalData(type: Int): List<MovieModel>
+    @Query("SELECT * FROM movie WHERE type IN(:type) ORDER BY idMovie DESC")
+    fun getAllLocalData(type: Int): DataSource.Factory<Int, MovieModel>
 
     @Query("SELECT * FROM movie WHERE id = :id")
     fun getLocalDataById(id: Int): MovieModel
-//
-//    @Query("DELETE FROM movie WHERE idMovie == :id AND type = :type")
-//    fun deleteLocalDataById(id: Int, type: Int): MovieModel
 
-    @Delete
-    fun deleteLocalData(data: MovieModel)
+    @Query("DELETE FROM movie WHERE id IN(:id)")
+    fun deleteLocalData(id: Int)
 }

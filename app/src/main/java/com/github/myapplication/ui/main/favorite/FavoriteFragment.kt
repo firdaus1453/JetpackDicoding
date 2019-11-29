@@ -1,6 +1,5 @@
 package com.github.myapplication.ui.main.favorite
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.myapplication.R
 import com.github.myapplication.ui.detail.detailmovie.DetailMovieActivity
-import com.github.myapplication.ui.main.MainAdapter
 import com.github.myapplication.utils.Constants
 import com.github.myapplication.utils.Constants.CATEGORY_MOVIE
 import com.github.myapplication.utils.Constants.CATEGORY_TV
@@ -18,16 +16,14 @@ import com.github.myapplication.utils.gone
 import com.github.myapplication.utils.obtainViewModel
 import com.github.myapplication.utils.visible
 import kotlinx.android.synthetic.main.fragment_favorite.*
-import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.fragment_movie.constrain_data_not_found
-import kotlinx.android.synthetic.main.fragment_movie.progress_bar
 import kotlinx.android.synthetic.main.fragment_movie.text_sad
 import org.jetbrains.anko.startActivity
 
 class FavoriteFragment : Fragment() {
 
     private lateinit var mViewModel: FavoriteViewModel
-    private lateinit var adapter: MainAdapter
+    private lateinit var adapter: FavoriteAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,22 +53,33 @@ class FavoriteFragment : Fragment() {
     private fun getData() {
         when (arguments?.getInt(ARG_SECTION_NUMBER) ?: 1) {
             CATEGORY_MOVIE -> {
-                mViewModel.getAllMovies(CATEGORY_MOVIE)
+                mViewModel.getAllMovies(CATEGORY_MOVIE)?.observe(this@FavoriteFragment, Observer {
+                    adapter.submitList(it)
+                    if (it.toList().isNullOrEmpty()) {
+                        mViewModel.eventGlobalMessage.postValue("Data favorit belum ada")
+                    } else {
+                        constrain_data_not_found.gone()
+                        recycler_favorite.visible()
+                    }
+                })
+
             }
             CATEGORY_TV -> {
-                mViewModel.getAllMovies(CATEGORY_TV)
+                mViewModel.getAllMovies(CATEGORY_TV)?.observe(this@FavoriteFragment, Observer {
+                    adapter.submitList(it)
+                    if (it.toList().isNullOrEmpty()) {
+                        mViewModel.eventGlobalMessage.postValue("Data favorit belum ada")
+                    } else {
+                        constrain_data_not_found.gone()
+                        recycler_favorite.visible()
+                    }
+                })
             }
         }
     }
 
     private fun setupObserver() {
         mViewModel.apply {
-            getMovieList().observe(this@FavoriteFragment, Observer {
-                constrain_data_not_found.gone()
-                recycler_favorite.visible()
-                adapter.setContentList(it)
-            })
-
             eventGlobalMessage.observe(this@FavoriteFragment, Observer {
                 if (it != null) {
                     recycler_favorite.gone()
@@ -80,20 +87,11 @@ class FavoriteFragment : Fragment() {
                     text_sad.text = it
                 }
             })
-
-            eventShowProgress.observe(this@FavoriteFragment, Observer {
-                if (it == true) {
-                    progress_bar.visible()
-                    constrain_data_not_found.gone()
-                } else {
-                    progress_bar.gone()
-                }
-            })
         }
     }
 
     private fun setupRecycler() {
-        adapter = MainAdapter { idMovie ->
+        adapter = FavoriteAdapter { idMovie ->
             context?.startActivity<DetailMovieActivity>(Constants.KEY_MOVIE to idMovie)
         }
         recycler_favorite.let {

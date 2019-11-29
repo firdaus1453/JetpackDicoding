@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.github.myapplication.utils.Constants.COLUMN_FAVORITE
 import com.github.myapplication.utils.Constants.COLUMN_FIRSTRELEASEDATE
 import com.github.myapplication.utils.Constants.COLUMN_ID
 import com.github.myapplication.utils.Constants.COLUMN_IDMOVIE
@@ -16,6 +15,7 @@ import com.github.myapplication.utils.Constants.COLUMN_TITLE
 import com.github.myapplication.utils.Constants.COLUMN_TYPE
 import com.github.myapplication.utils.Constants.COLUMN_VOTE_AVERAGE
 import com.github.myapplication.utils.Constants.TABLE_NAME
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -24,8 +24,12 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = TABLE_NAME)
 @Parcelize
 data class MovieModel(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = COLUMN_IDMOVIE)
+    var idMovie: Int? = 0,
+
     @ColumnInfo(name = COLUMN_ID)
+    @SerializedName("id")
     var id: Int? = 0,
 
     @ColumnInfo(name = COLUMN_TITLE)
@@ -50,8 +54,5 @@ data class MovieModel(
     var vote_average: Double? = 0.0,
 
     @ColumnInfo(name = COLUMN_TYPE)
-    var type: Int,
-
-    @ColumnInfo(name = COLUMN_FAVORITE)
-    var favorite: String? = ""
+    var type: Int
 ) : Parcelable

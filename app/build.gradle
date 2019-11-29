@@ -97,6 +97,9 @@ dependencies {
     kapt libraries.glideCompiler
     annotationProcessor libraries.glideCompiler
 
+    // Paging
+    implementation supportDependencies.paging
+
     // Unit Test
     testImplementation testLibraries.junit
     testImplementation testLibraries.junitRunner

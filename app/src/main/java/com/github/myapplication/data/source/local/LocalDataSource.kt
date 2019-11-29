@@ -5,6 +5,7 @@ import com.github.myapplication.data.model.MovieModel
 import com.github.myapplication.data.source.DataSource
 import com.github.myapplication.data.source.local.dao.MovieDao
 import com.github.myapplication.ui.MyApplication
+import androidx.paging.DataSource as DS
 
 /**
  * Created by Muhammad Firdaus on 28/11/2019.
@@ -34,15 +35,7 @@ class LocalDataSource {
         }
     }
 
-    fun getAllLocalData(type: Int, callback: DataSource.GetAllDataCallback) {
-        try {
-            movieDao?.getAllLocalData(type).let {
-                if (!it.isNullOrEmpty()) callback.onSuccess(it) else callback.onFailed("Belum ada data Favorite")
-            }
-        } catch (exception: Exception) {
-            callback.onFailed(exception.message)
-        }
-    }
+    fun getAllLocalData(type: Int): DS.Factory<Int, MovieModel>? = movieDao?.getAllLocalData(type)
 
     fun getLocalDataById(id: Int, callback: DataSource.GetDataByIdCallback) {
         try {
@@ -52,9 +45,9 @@ class LocalDataSource {
         }
     }
 
-    fun deleteLocalData(data: MovieModel) {
+    fun deleteLocalData(id: Int) {
         try {
-            movieDao?.deleteLocalData(data)
+            movieDao?.deleteLocalData(id)
         } catch (exception: Exception) {
             Log.e(TAG, exception.message.toString())
         }
